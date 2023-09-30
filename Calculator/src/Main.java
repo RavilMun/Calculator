@@ -18,29 +18,28 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println(calc(input));
-
     }
     public static String calc(String input) {
 
-        String[] operandsAndOperatorArr = input.split(" ");
+        String[] operandsAndOperatorArr = input.split("(?<=[+\\-*/])|(?=[+\\-*/])");
 
         if (!(operandsAndOperatorArr.length == 3)) {
-            throw new RuntimeException("Введенная строка не соответсвует условию");
+            throw new IllegalArgumentException("Введенная строка не соответсвует условию");
         }
 
         String operator = operandsAndOperatorArr[1];
-        String operand1 = operandsAndOperatorArr[0];
-        String operand2 = operandsAndOperatorArr[2];
+        String operand1 = operandsAndOperatorArr[0].replaceAll("\s*","");
+        String operand2 = operandsAndOperatorArr[2].replaceAll("\s*","");
         String operand1and2 = operand1 + operand2;
 
         if (!operator.matches("[\\-*/+]")) {
-            throw new RuntimeException("Введен неверный оператор");
+            throw new IllegalArgumentException("Введен неверный оператор");
         }
-        if (!operand1and2.matches("[0-9IVX]+")) {
-            throw new RuntimeException("Введено неверное значение операнда");
+        if (!operand1and2.matches("[\\dIVX]+")) {
+            throw new IllegalArgumentException("Введено неверное значение операнда");
         }
-        if (operand1and2.matches("([0-9]+[IXV]+)|([IXV]+[0-9]+)")) {
-            throw new RuntimeException("Операнды имеют разный тип");
+        if (operand1and2.matches("(\\d+[IXV]+)|([IXV]+\\d+)")) {
+            throw new IllegalArgumentException("Операнды имеют разный тип");
         }
 
         boolean isRoman = false;
@@ -55,6 +54,10 @@ public class Main {
             op1 = Converter.romanToArabic(operand1);
             op2 = Converter.romanToArabic(operand2);
         }
+        if ((op1<=0||op1>10)||(op2<=0||op2>10)){
+            throw new IllegalArgumentException("Введенное число меньше 1 или больше 10");
+        }
+
         int resultInt=0;
 
         switch (operator) {
