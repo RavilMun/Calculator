@@ -31,7 +31,7 @@ class Converter {
     public static String arabicToRoman(int arabicNum) {
 
         if (arabicNum <= 0) {
-            throw new RuntimeException("Римские числа могут быть только положительными");
+            throw new IllegalArgumentException("Римские числа могут быть только натуральными");
         }
 
         HashMap<Integer, String> arabicKeyMap = new HashMap<>();
