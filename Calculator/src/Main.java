@@ -38,7 +38,7 @@ public class Main {
         if (!operand1and2.matches("[\\dIVX]+")) {
             throw new IllegalArgumentException("Введено неверное значение операнда");
         }
-        if (operand1and2.matches("(\\d+[IXV]+)|([IXV]+\\d+)")) {
+        if (!operand1and2.matches("(\\d+)|([IXV]+)")) {
             throw new IllegalArgumentException("Операнды имеют разный тип");
         }
 
